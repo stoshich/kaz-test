@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  items: []
+  items: [],
+  selectedId: ''
 }
 
 const listSlice = createSlice({
@@ -11,12 +12,15 @@ const listSlice = createSlice({
     addItem: (state, action) => {
       state.items.push(action.payload)
     },
-    removeItems: (state, action) => {
-      state.items = state.items.filter()
+    removeItem: (state, action) => {
+      state.items = state.items.filter(item => item.id !== action.payload)
+    },
+    setSelectedId: (state, action) => {
+      state.selectedId = action.payload
     }
   }
 })
 
-export const { addItem, removeItems } = listSlice.actions
+export const { addItem, removeItem, setSelectedId } = listSlice.actions
 
 export default listSlice.reducer

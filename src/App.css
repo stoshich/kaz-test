@@ -1,0 +1,12 @@
+.btns {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-btns {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}

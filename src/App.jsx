@@ -1,41 +1,32 @@
-import { Box, Button, Modal, Typography } from '@mui/material'
+import { Button } from '@mui/material'
 import { useState } from 'react'
+import { useSelector } from 'react-redux';
 import './App.css'
-
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
+import ItemsList from './components/ItemsList';
+import ModalConfirm from './components/ModalConfirm';
 import ModalInput from './components/ModalInput';
 
 function App() {
 
-  const [selectedIndex, setSelectedIndex] = useState(1);
+
   const [open, setOpen] = useState(false)
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const selectedId = useSelector(state => state.list.selectedId)
+
+  const deleteHandler = () => {
+    setOpenConfirm(true)
+  }
+
 
   return (
     <div className="App">
       <div className='btns'>
         <Button variant='contained' onClick={() => setOpen(true)}>Добавить</Button>
-        <Button variant='contained' color='error'>Удалить</Button>
+        <Button variant='contained' color='error' onClick={deleteHandler} disabled={!selectedId}>Удалить</Button>
       </div>
-      <List component="nav" aria-label="main mailbox folders">
-        <ListItemButton
-          selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
-        >
-          <ListItemText primary="Inbox" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
-        >
-          <ListItemText primary="Drafts" />
-        </ListItemButton>
-      </List>
+      <ItemsList />
       <ModalInput open={open} setOpen={setOpen} />
+      <ModalConfirm open={openConfirm} setOpen={setOpenConfirm} />
     </div>
   )
 }
